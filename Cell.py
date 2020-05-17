@@ -10,6 +10,13 @@ class Cell:
         self.surface = surface
 
     def show(self):
-        pygame.draw.rect(
-            self.surface, pygame.Color("white"),
-            (self.x * self.width, self.y * self.width, self.width, self.width))
+        white = pygame.Color("white")
+        # top
+        pygame.draw.line(self.surface, white,
+                         (self.x * self.width, self.y * self.width),
+                         (self.x * self.width + self.width, self.y * self.width))
+
+        # left
+        pygame.draw.line(self.surface, white,
+                         (self.x * self.width, self.y * self.width),
+                         (self.x * self.width, self.y * self.width + self.width))
