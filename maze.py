@@ -1,34 +1,36 @@
 import pygame
 
-from Cell import Cell
-
-res = 10
+from Grid import Grid
 
 pygame.init()
 
-size = width, height = 320, 320
+res = 20
+size = width, height = 500, 500
 speed = [2, 2]
 black = 0, 0, 0
-
-cell_width = width // res
 
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
-grid = []
+grid = Grid(width, res, screen)
+while not grid.finished():
+    grid.update()
 
-for x in range(res):
-    for y in range(res):
-        grid.append(Cell(screen, x, y, cell_width))
+pygame.display.flip()
+screen.fill((0, 0, 0))
+grid.show()
+pygame.display.flip()
 
-print(grid)
-
+grid.solve()
 crashed = False
 
 while not crashed:
+    screen.fill((0, 0, 0))
 
-    for cell in grid:
-        cell.show()
+    # pygame.time.delay(1000)
+
+    grid.show_trail()
+    grid.show()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -36,5 +38,5 @@ while not crashed:
 
         print(event)
 
-    pygame.display.update()
+    pygame.display.flip()
     clock.tick(60)
