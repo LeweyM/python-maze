@@ -14,6 +14,10 @@ class Cell:
     def __str__(self):
         return f"(%s, %s)" % (self.x, self.y)
 
+    def show_square(self, color):
+        color = pygame.Color(color)
+        pygame.draw.rect(self.surface, color, (self.x * self.width, self.y * self.width, self.width, self.width))
+
     def show_red(self):
         red = pygame.Color("red")
         pygame.draw.rect(self.surface, red, (self.x * self.width, self.y * self.width, self.width, self.width))

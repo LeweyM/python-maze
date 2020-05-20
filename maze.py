@@ -5,7 +5,7 @@ from Solver import Solver
 
 pygame.init()
 
-res = 100
+res = 20
 size = width, height = 500, 500
 speed = [2, 2]
 black = 0, 0, 0
@@ -14,18 +14,26 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 grid = Grid(width, res, screen)
-while not grid.finished():
-    grid.update()
-
 solver = Solver(grid)
+
 crashed = False
 
 while not crashed:
     screen.fill((0, 0, 0))
 
-    # pygame.time.delay(1000)
+    grid.update()
 
-    grid.show_trail(solver.solve())
+    if grid.finished():
+        solver.update()
+        solver.show_visited_nodes()
+
+        if solver.finished:
+            solver.show_trail()
+            grid.show()
+            pygame.display.flip()
+            pygame.time.delay(3000)
+            grid = Grid(width, res, screen)
+            solver = Solver(grid)
     grid.show()
 
     for event in pygame.event.get():

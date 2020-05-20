@@ -1,31 +1,50 @@
 from heapq import *
 
 
+def collect_trail(node):
+    trail = []
+    while node:
+        trail.append(node.index)
+        node = node.parent
+    return trail
+
+
 class Solver:
     def __init__(self, grid):
-        self.trail = []
+        root_node = Node(0, 0, None)
+        self.finished = False
+        self.search_head_node = root_node
         self.grid = grid
+        self.trail = []
+        self.visited_nodes = {0}
+        self.node_heap = [root_node]
 
     def solve(self):
-        root_node = Node(0, 0, None)
-        node_heap = [root_node]
-        visited_nodes = {0}
+        while self.finished is False:
+            self.update()
 
-        while len(node_heap) > 0:
-            node = heappop(node_heap)
+    def update(self):
+        if self.finished:
+            return
+        if len(self.node_heap) > 0:
+            node = heappop(self.node_heap)
+            self.trail = collect_trail(node)
             if node.index == self.grid.res ** 2 - 1:
-                return self.collect_trail(node)
+                self.finished = True
+                return
             for i in self.grid.open_neighbors(node.index):
-                if i not in visited_nodes:
+                if i not in self.visited_nodes:
                     next_node = Node(node.steps + 1, i, node)
-                    heappush(node_heap, next_node)
-                    visited_nodes.add(i)
+                    heappush(self.node_heap, next_node)
+                    self.visited_nodes.add(i)
 
-    def collect_trail(self, node):
-        while node:
-            self.trail.append(node.index)
-            node = node.parent
-        return self.trail
+    def show_visited_nodes(self):
+        for i in self.visited_nodes:
+            self.grid.grid[i].show_square("blue")
+
+    def show_trail(self):
+        for i in self.trail:
+            self.grid.grid[i].show_square("red")
 
 
 class Node:
