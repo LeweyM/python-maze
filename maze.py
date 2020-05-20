@@ -1,10 +1,11 @@
 import pygame
 
 from Grid import Grid
+from Solver import Solver
 
 pygame.init()
 
-res = 20
+res = 100
 size = width, height = 500, 500
 speed = [2, 2]
 black = 0, 0, 0
@@ -16,12 +17,7 @@ grid = Grid(width, res, screen)
 while not grid.finished():
     grid.update()
 
-pygame.display.flip()
-screen.fill((0, 0, 0))
-grid.show()
-pygame.display.flip()
-
-grid.solve()
+solver = Solver(grid)
 crashed = False
 
 while not crashed:
@@ -29,7 +25,7 @@ while not crashed:
 
     # pygame.time.delay(1000)
 
-    grid.show_trail()
+    grid.show_trail(solver.solve())
     grid.show()
 
     for event in pygame.event.get():
