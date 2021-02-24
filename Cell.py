@@ -1,13 +1,10 @@
-import pygame
-
-
 class Cell:
 
-    def __init__(self, surface, x, y, width):
+    def __init__(self, ui, x, y, width):
         self.width = width
         self.x = x
         self.y = y
-        self.surface = surface
+        self.ui = ui
         self.top = True
         self.left = True
 
@@ -15,28 +12,24 @@ class Cell:
         return f"(%s, %s)" % (self.x, self.y)
 
     def show_square(self, color):
-        color = pygame.Color(color)
-        pygame.draw.rect(self.surface, color, (self.x * self.width, self.y * self.width, self.width, self.width))
+        self.ui.rect(color, (self.x * self.width, self.y * self.width, self.width, self.width))
 
     def show_red(self):
-        red = pygame.Color("red")
-        pygame.draw.rect(self.surface, red, (self.x * self.width, self.y * self.width, self.width, self.width))
+        self.ui.rect("red", (self.x * self.width, self.y * self.width, self.width, self.width))
 
     def show(self):
-        white = pygame.Color("white")
-        # top
-        self.show_lines(white)
+        self.show_lines("white")
 
     def show_lines(self, color):
         if self.top:
-            pygame.draw.line(self.surface, color,
-                             (self.x * self.width, self.y * self.width),
-                             (self.x * self.width + self.width, self.y * self.width))
+            self.ui.line(color,
+                         (self.x * self.width, self.y * self.width),
+                         (self.x * self.width + self.width, self.y * self.width))
         # left
         if self.left:
-            pygame.draw.line(self.surface, color,
-                             (self.x * self.width, self.y * self.width),
-                             (self.x * self.width, self.y * self.width + self.width))
+            self.ui.line(color,
+                         (self.x * self.width, self.y * self.width),
+                         (self.x * self.width, self.y * self.width + self.width))
 
     def open(self, other):
         if self.y > other.y and self.x == other.x:

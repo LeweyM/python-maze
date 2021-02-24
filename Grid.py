@@ -1,6 +1,5 @@
 import collections
 import random
-from heapq import *
 
 from Cell import Cell
 
@@ -19,7 +18,7 @@ def visited(pos, visited_set: set):
 
 class Grid:
 
-    def __init__(self, size, res, screen):
+    def __init__(self, size, res, ui):
         self.trail = []
         self.size = size
         self.res = res
@@ -34,7 +33,7 @@ class Grid:
 
         for y in range(res):
             for x in range(res):
-                self.grid.append(Cell(screen, x, y, cell_width))
+                self.grid.append(Cell(ui, x, y, cell_width))
 
     def finished(self):
         return len(self.grid) == len(self.visited)

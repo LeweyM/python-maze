@@ -7,5 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="brython" level="application" />
+    <orderEntry type="library" name="org.webjars.npm:brython:3.7.1" level="project" />
   </component>
 </module>

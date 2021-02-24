@@ -1,7 +1,7 @@
-import pygame
-
+import pyjsdl as pygame
 from Grid import Grid
 from Solver import Solver
+
 
 pygame.init()
 
@@ -18,11 +18,11 @@ solver = Solver(grid)
 
 crashed = False
 
-while not crashed:
+
+def run():
+    global grid, solver, crashed
     screen.fill((0, 0, 0))
-
     grid.update()
-
     if grid.finished():
         solver.update()
         solver.show_visited_nodes()
@@ -35,12 +35,15 @@ while not crashed:
             grid = Grid(width, res, screen)
             solver = Solver(grid)
     grid.show()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             crashed = True
 
         print(event)
-
     pygame.display.flip()
     clock.tick(60)
+
+pygame.display.setup(run, {brython.js})
+
+while not crashed:
+    run()
